@@ -51,7 +51,7 @@ public class Catalogue {
 
 	public Document getDocument() throws SAXException, IOException, ParserConfigurationException {
 
-		File xmlFile = new File("C:\\Users\\modaser\\Desktop\\XML-Parsing-main\\XML-Parsing-main\\XML-Parsing\\src\\java\\FMA_7AGA\\Catalogue.xml");
+		File xmlFile = new File("C:\\Users\\modaser\\Desktop\\FMA_7AGA\\Catalogue.xml");
 
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		Document doc;
@@ -192,6 +192,40 @@ int x=0;
 			}
 
 		}
+	}
+		public void searchAll2(String elem) {
+			Document doc = null;
+			try {
+				doc = getDocument();
+			} catch (SAXException | IOException | ParserConfigurationException e) {
+				e.printStackTrace();
+			}
+	int x=0;
+			NodeList nodeList = doc.getElementsByTagName("BOOK");
+			//Node ans = null;
+			for (int itr = 0; itr < nodeList.getLength(); itr++) {
+				Node node = nodeList.item(itr);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) node;
+					String aTitle = eElement.getElementsByTagName("Title").item(0).getTextContent();
+					String anAuthor = eElement.getElementsByTagName("Author").item(0).getTextContent();
+					if (aTitle.toLowerCase().contains(elem.toLowerCase())
+							|| anAuthor.toLowerCase().contains(elem.toLowerCase())) {
+								x++;
+								Element eeElement = (Element) node;
+								System.out.println("Book ID: " + eeElement.getAttribute("ID"));
+								System.out.println("Author: " + eeElement.getElementsByTagName("Author").item(0).getTextContent());
+								System.out.println("Title: " + eeElement.getElementsByTagName("Title").item(0).getTextContent());
+								System.out.println("Genre: " + eeElement.getElementsByTagName("Genre").item(0).getTextContent());
+								System.out.println("Price: " + eeElement.getElementsByTagName("Price").item(0).getTextContent());
+								System.out.println("Publish_Date: " + eeElement.getElementsByTagName("Publish_Date").item(0).getTextContent());
+								System.out.println("Description: " + eeElement.getElementsByTagName("Description").item(0).getTextContent());
+												System.out.println("_______________________________________________________");
+	
+					}
+				}
+	
+			}
 		if(x==0)
 		System.out.println("Not found");
 	}
